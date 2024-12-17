@@ -45,7 +45,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh; /* Ensure it takes at least full viewport height */
     }
 
     .container {
@@ -57,8 +57,11 @@
       max-width: 500px;
       display: flex;
       flex-direction: column;
-      height: 85vh; /* Consistent vertical size */
+      /* Removed fixed height to allow dynamic sizing */
+      /* height: 85vh; */ /* Removed */
+      min-height: 60vh; /* Optional: Set a minimum height */
       box-sizing: border-box;
+      overflow-y: auto; /* Allow scrolling if content exceeds container height */
     }
 
     h2 {
