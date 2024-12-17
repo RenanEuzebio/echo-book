@@ -56,9 +56,9 @@
       transition: transform 0.3s ease-in-out; /* Smooth transition for hiding */
     }
 
-    /* Hidden Header */
-    header.hidden {
-      transform: translateY(-100%);
+    /* Hidden Bottom Navigation */
+    sl-tab-group.hidden-bottom {
+      transform: translateY(100%);
     }
 
     .header-content {
@@ -190,6 +190,7 @@
       height: 5.5rem;
       background-color: var(--sl-color-neutral-0);
       box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Added shadow for separation */
+      transition: transform 0.3s ease-in-out; /* Smooth transition for hiding */
     }
 
     sl-tab-group::part(nav) {
@@ -482,7 +483,7 @@
     const bookDialog = document.querySelector('#book-dialog');
     const dialogContent = document.querySelector('#dialog-content');
     const pointsDisplay = document.querySelector('#points');
-    const header = document.querySelector('#header'); // Header selector for hiding
+    const bottomNav = document.querySelector('#tab-navigation'); // Bottom navigation selector
 
     // Section URLs (Replace with actual URLs if available)
     const sections = {
@@ -882,13 +883,13 @@
     // Ensure Buttons are Restored on Modal Close
     bookDialog.addEventListener('sl-after-hide', resetModalButtons);
 
-    // Hide Header When Dialog is Open and Show When Closed
+    // Hide Bottom Navigation When Dialog is Open and Show When Closed
     bookDialog.addEventListener('sl-show', () => {
-      header.classList.add('hidden');
+      bottomNav.classList.add('hidden-bottom');
     });
 
     bookDialog.addEventListener('sl-hide', () => {
-      header.classList.remove('hidden');
+      bottomNav.classList.remove('hidden-bottom');
     });
   </script>
 </body>
