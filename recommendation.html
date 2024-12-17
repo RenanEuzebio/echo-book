@@ -205,48 +205,60 @@
     /* Dialog Content Styling */
     #dialog-content {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      max-height: 70vh; /* Set maximum height */
-      overflow-y: auto; /* Enable scrolling if content exceeds max height */
-      padding: 1rem; /* Added padding for better spacing */
+      flex-direction: row; /* Side-by-side layout */
+      align-items: flex-start;
+      width: 100%;
+      padding: 1rem;
+      box-sizing: border-box;
     }
 
-    #dialog-content img {
-      width: 250px; /* Reduced size for a smaller popup */
+    .book-details {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .book-details img {
+      width: 100px; /* Smaller width for mobile-first */
       height: auto;
       object-fit: cover;
       border-radius: var(--sl-border-radius-medium);
-      margin-bottom: 1rem;
+      margin-right: 1rem;
     }
 
-    #dialog-content h2 {
+    .book-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .book-info h2 {
       margin: 0.5rem 0;
-      text-align: center;
       color: var(--sl-color-primary-700);
+      font-size: 1.4rem;
     }
 
-    #dialog-content h3 {
+    .book-info h3 {
       margin: 0.5rem 0;
       color: #555555;
-      text-align: center;
+      font-size: 1.1rem;
     }
 
-    /* Use sl-details for collapsible description */
-    #dialog-content sl-details {
+    .book-info sl-details {
       width: 100%;
-      max-width: 500px;
       text-align: left;
     }
 
-    #dialog-content sl-details p {
+    .book-info sl-details p {
       margin: 0;
     }
 
     /* Adjust the dialog size */
     sl-dialog#book-dialog {
-      max-width: 600px; /* Smaller width */
-      padding: 1rem; /* Added padding for better spacing */
+      max-width: 100%; /* Full width on mobile */
+      width: 90%;
+      padding: 0; /* Remove default padding */
     }
 
     /* Modal Buttons Styling */
@@ -254,9 +266,10 @@
       display: flex;
       flex-direction: row; /* Ensure horizontal layout */
       justify-content: center; /* Center the buttons horizontally */
-      flex-wrap: nowrap; /* Prevent buttons from wrapping to the next line */
+      flex-wrap: wrap; /* Allow wrapping on smaller screens */
       gap: 1rem;
-      margin-top: 1rem;
+      padding: 1rem; /* Added padding for better spacing */
+      box-sizing: border-box;
     }
 
     /* Style for modal buttons with white background and appropriate icons */
@@ -358,6 +371,42 @@
       sl-icon {
         font-size: 2.5rem;
       }
+
+      /* Adjust modal content for mobile */
+      #dialog-content {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .book-details {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .book-details img {
+        width: 150px; /* Slightly larger on mobile for visibility */
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
+
+      .book-info {
+        align-items: center;
+        text-align: center;
+      }
+
+      .book-info sl-details {
+        width: 100%;
+      }
+
+      .modal-buttons {
+        flex-direction: column; /* Stack buttons vertically on mobile */
+        gap: 0.5rem;
+      }
+
+      .modal-buttons sl-button {
+        width: 100%; /* Make buttons full width on mobile */
+        min-width: unset; /* Remove min-width */
+      }
     }
   </style>
 
@@ -368,7 +417,7 @@
     <div class="header-content">
       <div class="header-left">ECHO</div>
       <div class="header-center">
-        <sl-input id="book-name" placeholder="Search for books..." pill></sl-input>
+        <sl-input id="book-name" placeholder="Search..." pill></sl-input>
       </div>
       <div class="header-right">
         <sl-icon src="assets/icons/leaf.svg" aria-label="Leaf Icon"></sl-icon>
@@ -781,12 +830,16 @@
     // Display Book Details in Modal
     function showBookDetails(book) {
       dialogContent.innerHTML = `
-        <img src="${book.image}" alt="${book.title}" />
-        <h2>${book.title}</h2>
-        <h3>By ${book.authors}</h3>
-        <sl-details summary="Show more">
-          <p>${book.description}</p>
-        </sl-details>
+        <div class="book-details">
+          <img src="${book.image}" alt="${book.title}" />
+          <div class="book-info">
+            <h2>${book.title}</h2>
+            <h3>By ${book.authors}</h3>
+            <sl-details summary="Show more">
+              <p>${book.description}</p>
+            </sl-details>
+          </div>
+        </div>
       `;
 
       // Show the modal dialog
