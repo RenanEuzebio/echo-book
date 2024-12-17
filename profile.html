@@ -1,2 +1,166 @@
-<h1>Profile</h1>
-<p>I AM STILL DOING THIS SECTION</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User Profile</title>
+  <!-- Shoelace Components -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/shoelace.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/themes/light.css">
+
+  <style>
+    :root {
+      /* Color Palette */
+      --sl-color-primary-50: #e6f7e6; /* Light green */
+      --sl-color-primary-100: #c2e7c2;
+      --sl-color-primary-200: #9fd49f;
+      --sl-color-primary-300: #7cc27c;
+      --sl-color-primary-400: #5a8f5a; /* Default medium green */
+      --sl-color-primary-500: #468046;
+      --sl-color-primary-600: #346934;
+      --sl-color-primary-700: #245024;
+      --sl-color-primary-800: #153715;
+      --sl-color-primary-900: #0a1f0a;
+      --sl-color-primary-950: #051005;
+      --sl-input-focus-ring-color: darkgreen;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--sl-color-primary-50);
+      color: var(--sl-color-primary-900);
+    }
+
+    .profile-container {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--sl-color-primary-600);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Profile Picture */
+    .profile-picture {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .profile-picture img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%; /* Makes it circular */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    sl-button {
+      margin-top: 1rem;
+    }
+
+    /* Form Sections */
+    .form-section {
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--sl-color-primary-700);
+    }
+
+    .form-section sl-input,
+    .form-section sl-select,
+    .form-section sl-button {
+      margin-bottom: 1rem;
+    }
+
+    .genre-checkboxes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    sl-checkbox {
+      margin-bottom: 0.5rem;
+    }
+
+    sl-button.save-btn {
+      display: block;
+      margin: 0 auto;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .profile-container {
+        padding: 1.5rem;
+      }
+
+      .profile-picture img {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <!-- Header -->
+    <h1>User Profile</h1>
+
+    <!-- Profile Picture Section -->
+    <div class="profile-picture">
+      <img src="assets/img/jens.webp" alt="Profile Picture">
+      <sl-button variant="primary" @click="alert('Change picture functionality here')">Change Picture</sl-button>
+    </div>
+
+    <!-- Editable Form Sections -->
+    <div class="form-section">
+      <div class="section-title">Personal Information</div>
+      <sl-input label="Full Name" placeholder="Enter your full name"></sl-input>
+      <sl-input type="email" label="Email Address" placeholder="Enter your email"></sl-input>
+      <sl-input type="password" label="Password" placeholder="Enter new password"></sl-input>
+    </div>
+
+    <div class="form-section">
+      <div class="section-title">Address</div>
+      <sl-input label="Street Address" placeholder="123 Main St"></sl-input>
+      <sl-input label="City" placeholder="Enter your city"></sl-input>
+      <sl-input label="Postal Code" placeholder="Enter postal code"></sl-input>
+      <sl-select label="Country">
+        <sl-option value="us">United States</sl-option>
+        <sl-option value="ca">Canada</sl-option>
+        <sl-option value="uk">United Kingdom</sl-option>
+        <sl-option value="de">Germany</sl-option>
+      </sl-select>
+    </div>
+
+    <div class="form-section">
+      <div class="section-title">Favorite Genres</div>
+      <div class="genre-checkboxes">
+        <sl-checkbox value="fantasy">Fantasy</sl-checkbox>
+        <sl-checkbox value="mystery">Mystery</sl-checkbox>
+        <sl-checkbox value="romance">Romance</sl-checkbox>
+        <sl-checkbox value="sci-fi">Science Fiction</sl-checkbox>
+        <sl-checkbox value="non-fiction">Non-Fiction</sl-checkbox>
+        <sl-checkbox value="horror">Horror</sl-checkbox>
+        <sl-checkbox value="thriller">Thriller</sl-checkbox>
+      </div>
+    </div>
+
+    <!-- Save Changes Button -->
+    <sl-button variant="success" class="save-btn" @click="alert('Save functionality here')">Save Changes</sl-button>
+  </div>
+</body>
+</html>
