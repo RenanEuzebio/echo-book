@@ -498,19 +498,16 @@
       { 
         title: 'Harry Potter and the Goblet of Fire', 
         authors: 'J.K. Rowling', 
-        description: 'The fourth book in the Harry Potter series.', 
         image: 'https://covers.openlibrary.org/b/id/7984916-L.jpg' 
       },
       { 
         title: 'The Hobbit', 
         authors: 'J.R.R. Tolkien', 
-        description: 'A journey through Middle-earth.', 
         image: 'https://covers.openlibrary.org/b/id/6979861-L.jpg' 
       },
       { 
         title: '1984', 
         authors: 'George Orwell', 
-        description: 'A dystopian social science fiction novel.', 
         image: 'https://covers.openlibrary.org/b/id/7222246-L.jpg' 
       }
     ];
@@ -537,10 +534,8 @@
         const title = card.querySelector('strong').textContent;
         const authorsText = card.querySelector('small').textContent.trim();
         const authors = authorsText; // Assuming 'small' contains only authors
-        const description = card.querySelector('small').textContent;
-        // Optional: Adjust 'description' if needed
 
-        showBookDetails({ image, title, authors, description });
+        showBookDetails({ image, title, authors });
       }
     });
 
@@ -612,7 +607,7 @@
         card.innerHTML = `
           <img slot="image" src="${book.image}" alt="${book.title}" loading="lazy" />
           <strong>${book.title}</strong>
-          <small>By ${book.authors}</small>
+          <small> ${book.authors}</small>
           <div slot="footer" class="footer-content">
             <sl-rating value="5" readonly></sl-rating>
             <sl-button size="medium" variant="primary">View</sl-button>
@@ -682,8 +677,6 @@
       response.items.forEach(item => {
         const title = item.volumeInfo.title || "No Title";
         const authors = item.volumeInfo.authors ? item.volumeInfo.authors.join(', ') : "Unknown Author";
-        const description = item.volumeInfo.description || "No description available.";
-        const truncatedDescription = truncateDescription(description, 150);
 
         // Use the higher-resolution image URL or fallback to placeholder
         const thumbnail = item.id 
@@ -697,7 +690,7 @@
         card.innerHTML = `
           <img slot="image" src="${thumbnail}" alt="${title}" loading="lazy" />
           <strong>${title}</strong>
-          <small>By ${authors}</small>
+          <small> ${authors}</small>
           <div slot="footer" class="footer-content">
             <sl-rating value="${rating}" readonly></sl-rating>
             <sl-button size="medium" variant="primary">View</sl-button>
@@ -836,9 +829,6 @@
           <div class="book-info">
             <h2>${book.title}</h2>
             <h3>By ${book.authors}</h3>
-            <sl-details summary="Show more">
-              <p>${book.description}</p>
-            </sl-details>
           </div>
         </div>
       `;
@@ -849,6 +839,7 @@
       // Add event listeners to modal buttons
       attachModalButtonListeners();
     }
+
 
     // Function to Update Points
     let currentPoints = 0; // Starting points
@@ -862,11 +853,6 @@
         }
       }
       pointsDisplay.textContent = currentPoints; // Update the points display
-    }
-
-    // Truncate Description Function
-    function truncateDescription(text, length) {
-      return text.length > length ? text.slice(0, length) + "..." : text;
     }
 
     // Utility Function to Generate Random Ratings
