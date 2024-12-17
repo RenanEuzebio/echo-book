@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Preferences</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/themes/light.css" />
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/shoelace-autoloader.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+    sl-button {
+      margin: 0.5rem;
+    }
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+    }
+    sl-checkbox {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 0.5rem 0;
+    }
+    sl-progress-bar {
+      margin-bottom: 1rem;
+    }
+    .checkbox-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 1rem;
+    }
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 id="step-title">Which languages do you prefer for reading?</h2>
+    <sl-progress-bar id="progress-bar" value="0"></sl-progress-bar>
+
+    <!-- Step 1: Select Language -->
+    <div class="step active" id="step-1">
+      <div class="checkbox-container">
+        <sl-checkbox id="lang-english" value="english">English</sl-checkbox>
+        <sl-checkbox id="lang-spanish" value="spanish">Spanish</sl-checkbox>
+        <sl-checkbox id="lang-french" value="french">French</sl-checkbox>
+        <sl-checkbox id="lang-german" value="german">German</sl-checkbox>
+      </div>
+      <br>
+      <div class="button-container">
+        <span></span>
+        <sl-button variant="primary" id="to-step-2">Next</sl-button>
+      </div>
+    </div>
+
+    <!-- Step 2: Select Genre -->
+    <div class="step" id="step-2">
+      <div class="checkbox-container">
+        <sl-checkbox id="genre-fantasy" value="fantasy">Fantasy</sl-checkbox>
+        <sl-checkbox id="genre-mystery" value="mystery">Mystery</sl-checkbox>
+        <sl-checkbox id="genre-sci-fi" value="sci-fi">Science Fiction</sl-checkbox>
+        <sl-checkbox id="genre-romance" value="romance">Romance</sl-checkbox>
+        <sl-checkbox id="genre-nonfiction" value="non-fiction">Non-Fiction</sl-checkbox>
+      </div>
+      <br>
+      <div class="button-container">
+        <sl-button variant="neutral" id="back-to-step-1">Back</sl-button>
+        <sl-button variant="primary" id="to-step-3">Next</sl-button>
+      </div>
+    </div>
+
+    <!-- Step 3: Confirmation -->
+    <div class="step" id="step-3">
+      <p><strong>Languages:</strong> <span id="selected-languages"></span></p>
+      <p><strong>Genres:</strong> <span id="selected-genres"></span></p>
+      <div class="button-container">
+        <sl-button variant="neutral" id="back-to-step-2">Back</sl-button>
+        <sl-button variant="success" id="confirm-btn">Confirm & Continue</sl-button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const steps = document.querySelectorAll('.step');
+    const progressBar = document.getElementById('progress-bar');
+    const stepTitle = document.getElementById('step-title');
+    const toStep2Btn = document.getElementById('to-step-2');
+    const toStep3Btn = document.getElementById('to-step-3');
+    const backToStep1Btn = document.getElementById('back-to-step-1');
+    const backToStep2Btn = document.getElementById('back-to-step-2');
+    const confirmBtn = document.getElementById('confirm-btn');
+
+    const languageCheckboxes = document.querySelectorAll('[id^="lang-"]');
+    const genreCheckboxes = document.querySelectorAll('[id^="genre-"]');
+    const selectedLanguages = document.getElementById('selected-languages');
+    const selectedGenres = document.getElementById('selected-genres');
+
+    function showStep(stepNumber) {
+      steps.forEach((step, index) => {
+        step.classList.toggle('active', index === stepNumber - 1);
+      });
+      progressBar.value = (stepNumber - 1) * 50;
+      if (stepNumber === 1) stepTitle.textContent = "Which languages do you prefer for reading?";
+      if (stepNumber === 2) stepTitle.textContent = "What is your favorite genre?";
+      if (stepNumber === 3) stepTitle.textContent = "All Done!";
+    }
+
+    toStep2Btn.addEventListener('click', () => {
+      const selected = Array.from(languageCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+      if (selected.length > 0) {
+        showStep(2);
+      } else {
+        alert('Please select at least one language.');
+      }
+    });
+
+    toStep3Btn.addEventListener('click', () => {
+      const selectedLangs = Array.from(languageCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+      const selectedGenresList = Array.from(genreCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+
+      if (selectedGenresList.length > 0) {
+        selectedLanguages.textContent = selectedLangs.join(', ');
+        selectedGenres.textContent = selectedGenresList.join(', ');
+        showStep(3);
+      } else {
+        alert('Please select at least one genre.');
+      }
+    });
+
+    backToStep1Btn.addEventListener('click', () => showStep(1));
+    backToStep2Btn.addEventListener('click', () => showStep(2));
+
+    confirmBtn.addEventListener('click', () => {
+      window.location.href = 'recommendation.html';
+    });
+  </script>
+</body>
+</html>
