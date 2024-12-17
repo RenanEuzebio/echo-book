@@ -1,2 +1,185 @@
-<h1>Settings</h1>
-<p>I AM STILL DOING THIS SECTION</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings</title>
+  <!-- Shoelace Components -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/shoelace.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/themes/light.css">
+
+  <style>
+    :root {
+      /* Green Color Palette */
+      --sl-color-primary-50: #e6f7e6; /* Light green */
+      --sl-color-primary-100: #c2e7c2;
+      --sl-color-primary-200: #9fd49f;
+      --sl-color-primary-300: #7cc27c;
+      --sl-color-primary-400: #5a8f5a; /* Default medium green */
+      --sl-color-primary-500: #468046;
+      --sl-color-primary-600: #346934;
+      --sl-color-primary-700: #245024;
+      --sl-color-primary-800: #153715;
+      --sl-color-primary-900: #0a1f0a;
+      --sl-color-primary-950: #051005;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--sl-color-primary-50);
+      color: var(--sl-color-primary-900);
+    }
+
+    .settings-container {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--sl-color-primary-600);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Notification Preferences */
+    .form-section {
+      margin-bottom: 2rem;
+    }
+
+    .form-section sl-checkbox {
+      margin-bottom: 1rem;
+    }
+
+    /* Subscription Section */
+    .subscription-section {
+      margin-top: 2rem;
+    }
+
+    .subscription-options {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .subscription-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 2px solid var(--sl-color-primary-400);
+      border-radius: 8px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .subscription-card:hover,
+    .subscription-card.active {
+      background-color: var(--sl-color-primary-50);
+      border-color: var(--sl-color-primary-600);
+    }
+
+    .subscription-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .subscription-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--sl-color-primary-700);
+      margin: 0;
+    }
+
+    .subscription-subtitle {
+      font-size: 0.9rem;
+      color: var(--sl-color-primary-500);
+      margin-top: 0.25rem;
+    }
+
+    .subscription-price {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: var(--sl-color-primary-800);
+      margin-top: 0.5rem;
+    }
+
+    /* Save Button */
+    .save-btn {
+      display: block;
+      margin: 0 auto;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="settings-container">
+    <h1>Settings</h1>
+
+    <!-- Notification Preferences -->
+    <div class="form-section">
+      <h2>Notification Preferences</h2>
+      <sl-checkbox id="promo-emails">Receive exclusive promotions via email</sl-checkbox>
+      <sl-checkbox id="updates-emails">Get updates about new book arrivals</sl-checkbox>
+    </div>
+
+    <!-- Subscription Management -->
+    <div class="subscription-section">
+      <h2>Manage Subscription</h2>
+      <div class="subscription-options">
+        <!-- Monthly Subscription -->
+        <div class="subscription-card" id="monthly-subscription" onclick="selectSubscription('monthly')">
+          <div class="subscription-details">
+            <p class="subscription-title">Monthly Subscription</p>
+            <p class="subscription-subtitle">Cancel anytime</p>
+          </div>
+          <p class="subscription-price">€5.99</p>
+        </div>
+
+        <!-- Annual Subscription -->
+        <div class="subscription-card" id="annual-subscription" onclick="selectSubscription('annual')">
+          <div class="subscription-details">
+            <p class="subscription-title">Annual Subscription</p>
+            <p class="subscription-subtitle">Save 17%</p>
+          </div>
+          <p class="subscription-price">€59.99</p>
+        </div>
+      </div>
+
+      <!-- Save Button -->
+      <sl-button variant="success" class="save-btn" onclick="saveSettings()">Save Changes</sl-button>
+    </div>
+  </div>
+
+  <script>
+    const monthlyCard = document.getElementById('monthly-subscription');
+    const annualCard = document.getElementById('annual-subscription');
+
+    function selectSubscription(type) {
+      if (type === 'monthly') {
+        monthlyCard.classList.add('active');
+        annualCard.classList.remove('active');
+      } else {
+        annualCard.classList.add('active');
+        monthlyCard.classList.remove('active');
+      }
+    }
+
+    function saveSettings() {
+      const promoEmails = document.getElementById('promo-emails').checked;
+      const updatesEmails = document.getElementById('updates-emails').checked;
+      const subscriptionType = annualCard.classList.contains('active') ? 'Annual' : 'Monthly';
+
+      alert(`Settings saved:
+- Subscription: ${subscriptionType}
+- Receive promotions: ${promoEmails ? 'Yes' : 'No'}
+- Get updates: ${updatesEmails ? 'Yes' : 'No'}`);
+    }
+  </script>
+</body>
+</html>
