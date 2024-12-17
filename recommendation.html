@@ -35,7 +35,7 @@
       --sl-input-focus-ring-color: darkgreen;
       --sl-input-focus-ring-style: solid;
       --sl-input-focus-ring-width: .01em;
-      --sl-input-focus-ring: var(--sl-focus-ring-style) var(--sl-focus-ring-width) darkgreen;
+      --sl-input-focus-ring: var(--sl-input-focus-ring-style) var(--sl-input-focus-ring-width) darkgreen;
       --sl-input-focus-ring-offset: 1px;
     }
 
@@ -53,6 +53,12 @@
       justify-content: center;
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
       z-index: 1000;
+      transition: transform 0.3s ease-in-out; /* Smooth transition for hiding */
+    }
+
+    /* Hidden Header */
+    header.hidden {
+      transform: translateY(-100%);
     }
 
     .header-content {
@@ -61,6 +67,7 @@
       justify-content: center;
       width: 100%;
       position: relative;
+      padding: 0 1rem; /* Added padding for better spacing */
     }
 
     .header-left {
@@ -90,28 +97,35 @@
       font-weight: bold;
     }
 
+    .header-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
     .header-center sl-input {
-      max-width: 250px;
-      flex: none;
-      display: none; /* Initially hidden */
+      max-width: 180px; /* Reduced width for search bar */
+      width: 100%;
+      display: block; /* Ensure it's visible */
     }
 
     main {
       margin-top: 5rem; /* Prevent content from being hidden under the fixed header */
       margin-bottom: 6rem; /* Avoid overlap with the bottom navbar */
+      padding: 1rem; /* Added padding for better spacing */
     }
 
     /* Book Grid */
     .book-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusted minmax for better responsiveness */
       gap: 1.5rem;
-      padding: 1rem;
       padding-bottom: 6rem; /* Added padding to prevent last card from being hidden */
     }
 
     .card-overview {
-      width: 300px; /* Fixed width for consistent card sizes */
+      width: 100%;
+      max-width: 300px; /* Adjusted for consistency */
       box-shadow: var(--sl-shadow-medium);
       border-radius: var(--sl-border-radius-medium);
       text-align: center;
@@ -123,7 +137,7 @@
     }
 
     .card-overview img[slot="image"] {
-      height: 400px; /* Adjusted to show better proportions */
+      height: 200px; /* Reduced height for better proportions */
       width: 100%;
       object-fit: cover; /* Maintain aspect ratio while showing more image */
       border-top-left-radius: var(--sl-border-radius-medium);
@@ -175,6 +189,7 @@
       width: 100%;
       height: 5.5rem;
       background-color: var(--sl-color-neutral-0);
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Added shadow for separation */
     }
 
     sl-tab-group::part(nav) {
@@ -194,6 +209,7 @@
       align-items: center;
       max-height: 70vh; /* Set maximum height */
       overflow-y: auto; /* Enable scrolling if content exceeds max height */
+      padding: 1rem; /* Added padding for better spacing */
     }
 
     #dialog-content img {
@@ -207,6 +223,7 @@
     #dialog-content h2 {
       margin: 0.5rem 0;
       text-align: center;
+      color: var(--sl-color-primary-700);
     }
 
     #dialog-content h3 {
@@ -229,6 +246,7 @@
     /* Adjust the dialog size */
     sl-dialog#book-dialog {
       max-width: 600px; /* Smaller width */
+      padding: 1rem; /* Added padding for better spacing */
     }
 
     /* Modal Buttons Styling */
@@ -288,11 +306,65 @@
       margin-top: 0.5rem;
       text-align: center;
     }
+
+    /* Responsive Adjustments */
+    @media (max-width: 600px) {
+      header {
+        height: 3.5rem; /* Slightly reduced height for smaller screens */
+      }
+
+      .header-left {
+        font-size: 1.3rem;
+      }
+
+      .header-right sl-icon {
+        font-size: 1.8rem;
+      }
+
+      .header-right span {
+        font-size: 1rem;
+      }
+
+      .header-center sl-input {
+        max-width: 140px; /* Further reduce width on smaller screens */
+      }
+
+      main {
+        margin-top: 4.5rem; /* Adjust margin for reduced header height */
+      }
+
+      .book-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted for better fit */
+        gap: 1rem;
+      }
+
+      .card-overview img[slot="image"] {
+        height: 180px; /* Further reduced for smaller screens */
+      }
+
+      #trending-title {
+        font-size: 1.6rem;
+        margin: 0.8rem 0;
+      }
+
+      sl-tab-group {
+        height: 5rem; /* Adjusted height */
+      }
+
+      sl-tab-group::part(nav) {
+        gap: 0.5rem;
+      }
+
+      sl-icon {
+        font-size: 2.5rem;
+      }
+    }
   </style>
 
 </head>
 <body>
-  <header>
+  <!-- Top Navigation -->
+  <header id="header">
     <div class="header-content">
       <div class="header-left">ECHO</div>
       <div class="header-center">
@@ -305,7 +377,15 @@
     </div>
   </header>
 
-  <main id="content-container"></main>
+  <!-- Main Content -->
+  <main id="content-container">
+    <!-- Trending Books Title -->
+    <div id="trending-title">Trending Books</div>
+    <!-- Book Grid -->
+    <div class="book-grid" id="book-grid">
+      <!-- Book Cards will be dynamically injected here -->
+    </div>
+  </main>
 
   <!-- Modal Dialog for Book Details -->
   <sl-dialog label="Book Details" id="book-dialog">
@@ -328,6 +408,7 @@
     </div>
   </sl-dialog>
 
+  <!-- Bottom Navigation -->
   <sl-tab-group placement="bottom" id="tab-navigation" no-scroll-controls>
     <sl-tab slot="nav" panel="home">
       <sl-icon name="house" aria-label="Home"></sl-icon>
@@ -343,6 +424,7 @@
     </sl-tab>
   </sl-tab-group>
 
+  <!-- Script -->
   <script>
     // Selectors
     const tabGroup = document.querySelector('#tab-navigation');
@@ -351,6 +433,7 @@
     const bookDialog = document.querySelector('#book-dialog');
     const dialogContent = document.querySelector('#dialog-content');
     const pointsDisplay = document.querySelector('#points');
+    const header = document.querySelector('#header'); // Header selector for hiding
 
     // Section URLs (Replace with actual URLs if available)
     const sections = {
@@ -402,9 +485,10 @@
         const card = button.closest('.card-overview');
         const image = card.querySelector('img').src;
         const title = card.querySelector('strong').textContent;
-        const authorsText = card.querySelector('strong').nextSibling.textContent.trim();
-        const authors = authorsText.startsWith('By ') ? authorsText.slice(3) : authorsText;
+        const authorsText = card.querySelector('small').textContent.trim();
+        const authors = authorsText; // Assuming 'small' contains only authors
         const description = card.querySelector('small').textContent;
+        // Optional: Adjust 'description' if needed
 
         showBookDetails({ image, title, authors, description });
       }
@@ -478,7 +562,7 @@
         card.innerHTML = `
           <img slot="image" src="${book.image}" alt="${book.title}" loading="lazy" />
           <strong>${book.title}</strong>
-          <small>${book.description}</small>
+          <small>By ${book.authors}</small>
           <div slot="footer" class="footer-content">
             <sl-rating value="5" readonly></sl-rating>
             <sl-button size="medium" variant="primary">View</sl-button>
@@ -563,7 +647,7 @@
         card.innerHTML = `
           <img slot="image" src="${thumbnail}" alt="${title}" loading="lazy" />
           <strong>${title}</strong>
-          <small>${truncatedDescription}</small>
+          <small>By ${authors}</small>
           <div slot="footer" class="footer-content">
             <sl-rating value="${rating}" readonly></sl-rating>
             <sl-button size="medium" variant="primary">View</sl-button>
@@ -744,6 +828,15 @@
 
     // Ensure Buttons are Restored on Modal Close
     bookDialog.addEventListener('sl-after-hide', resetModalButtons);
+
+    // Hide Header When Dialog is Open and Show When Closed
+    bookDialog.addEventListener('sl-show', () => {
+      header.classList.add('hidden');
+    });
+
+    bookDialog.addEventListener('sl-hide', () => {
+      header.classList.remove('hidden');
+    });
   </script>
 </body>
 </html>

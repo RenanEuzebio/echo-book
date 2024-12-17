@@ -29,6 +29,11 @@
       --sl-input-focus-ring-width: 0.2em;
       --sl-input-focus-ring: var(--sl-input-focus-ring-style) var(--sl-input-focus-ring-width) var(--sl-input-focus-ring-color);
       --sl-input-focus-ring-offset: 1px;
+
+      /* Checkbox Colors */
+      --sl-checkbox-color: var(--sl-color-primary-500);
+      --sl-checkbox-background-color: var(--sl-color-primary-50);
+      --sl-checkbox-check-color: white;
     }
 
     /* Reset and Base Styles */
@@ -46,25 +51,29 @@
     .container {
       background: white;
       padding: 2rem;
-      border-radius: 8px;
+      border-radius: 12px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       width: 90%;
       max-width: 500px;
-      text-align: center;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      height: 90vh; /* Fixed height to maintain vertical size */
+      height: 85vh; /* Consistent vertical size */
       box-sizing: border-box;
     }
 
     h2 {
       color: var(--sl-color-primary-700);
+      margin-bottom: 0.5rem;
+      font-size: 1.6rem;
+      text-align: center;
     }
 
-    sl-button {
-      margin: 0.5rem;
-      flex: 1;
+    sl-progress-bar {
+      margin-bottom: 1rem;
+      --sl-progress-bar-color: var(--sl-color-primary-500);
+      --sl-progress-bar-background-color: var(--sl-color-primary-200);
+      height: 1.2rem;
+      border-radius: 0.6rem;
     }
 
     .step {
@@ -79,45 +88,61 @@
       justify-content: space-between;
     }
 
+    .checkbox-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      padding: 1rem;
+      justify-items: start;
+    }
+
     sl-checkbox {
+      font-size: 1rem;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-      margin: 0.5rem 0;
     }
 
-    sl-progress-bar {
-      margin-bottom: 1rem;
-      --sl-progress-bar-color: var(--sl-color-primary-500);
-      --sl-progress-bar-background-color: var(--sl-color-primary-200);
+    /* Style Checkboxes */
+    sl-checkbox::part(control) {
+      --background-color: var(--sl-color-primary-50);
+      --border-color: var(--sl-color-primary-400);
+      --check-color: var(--sl-checkbox-check-color);
+      --check-background-color: var(--sl-color-primary-500);
     }
 
-    .checkbox-container {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin-left: 1rem;
+    /* Override default checkbox colors when checked */
+    sl-checkbox.checked::part(control) {
+      --background-color: var(--sl-color-primary-500);
+      --border-color: var(--sl-color-primary-500);
+      --check-color: var(--sl-checkbox-check-color);
+      --check-background-color: var(--sl-color-primary-500);
     }
 
     .button-container {
       display: flex;
       justify-content: space-between;
+      gap: 1rem;
       margin-top: 1rem;
     }
 
-    /* Responsive Design */
+    sl-button {
+      flex: 1;
+    }
+
+    /* Mobile Adjustments */
     @media (max-width: 600px) {
-      .container {
-        height: 85vh; /* Slight adjustment for smaller screens */
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      .checkbox-container {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
       }
 
       sl-button {
-        padding: 0.5rem 1rem;
-        font-size: 1rem;
-      }
-
-      h2 {
-        font-size: 1.5rem;
+        font-size: 0.9rem;
+        padding: 0.6rem 0.8rem;
       }
     }
   </style>
@@ -160,8 +185,10 @@
 
     <!-- Step 3: Confirmation -->
     <div class="step" id="step-3">
-      <p><strong>Languages:</strong> <span id="selected-languages"></span></p>
-      <p><strong>Genres:</strong> <span id="selected-genres"></span></p>
+      <div>
+        <p><strong>Languages:</strong> <span id="selected-languages"></span></p>
+        <p><strong>Genres:</strong> <span id="selected-genres"></span></p>
+      </div>
       <div class="button-container">
         <sl-button variant="neutral" id="back-to-step-2">Back</sl-button>
         <sl-button variant="success" id="confirm-btn">Confirm & Continue</sl-button>
@@ -224,20 +251,6 @@
 
     confirmBtn.addEventListener('click', () => {
       window.location.href = 'recommendation.html';
-    });
-
-    // Optional: Prevent Container from Exceeding Viewport Height
-    window.addEventListener('resize', () => {
-      const container = document.querySelector('.container');
-      const viewportHeight = window.innerHeight;
-      container.style.maxHeight = (viewportHeight * 0.9) + 'px';
-    });
-
-    // Initial Adjustment on Page Load
-    window.addEventListener('DOMContentLoaded', () => {
-      const container = document.querySelector('.container');
-      const viewportHeight = window.innerHeight;
-      container.style.maxHeight = (viewportHeight * 0.9) + 'px';
     });
   </script>
 </body>
