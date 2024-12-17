@@ -2,74 +2,141 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Book Preferences</title>
+  <!-- Shoelace Components -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/shoelace.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/themes/light.css" />
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/shoelace-autoloader.js"></script>
+
   <style>
+    :root {
+      /* Green Color Palette */
+      --sl-color-primary-50: #e6f7e6; /* Light green */
+      --sl-color-primary-100: #c2e7c2;
+      --sl-color-primary-200: #9fd49f;
+      --sl-color-primary-300: #7cc27c;
+      --sl-color-primary-400: #5a8f5a; /* Default medium green */
+      --sl-color-primary-500: #468046;
+      --sl-color-primary-600: #346934;
+      --sl-color-primary-700: #245024;
+      --sl-color-primary-800: #153715;
+      --sl-color-primary-900: #0a1f0a;
+      --sl-color-primary-950: #051005;
+
+      /* Input Focus Styles */
+      --sl-input-focus-ring-color: var(--sl-color-primary-500);
+      --sl-input-focus-ring-style: solid;
+      --sl-input-focus-ring-width: 0.2em;
+      --sl-input-focus-ring: var(--sl-input-focus-ring-style) var(--sl-input-focus-ring-width) var(--sl-input-focus-ring-color);
+      --sl-input-focus-ring-offset: 1px;
+    }
+
+    /* Reset and Base Styles */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f9f9f9;
+      background-color: var(--sl-color-primary-50);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
     }
+
     .container {
       background: white;
       padding: 2rem;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      width: 100%;
+      width: 90%;
       max-width: 500px;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 90vh; /* Fixed height to maintain vertical size */
+      box-sizing: border-box;
     }
+
+    h2 {
+      color: var(--sl-color-primary-700);
+    }
+
     sl-button {
       margin: 0.5rem;
+      flex: 1;
     }
+
     .step {
       display: none;
+      flex: 1;
+      overflow-y: auto;
     }
+
     .step.active {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
+
     sl-checkbox {
       display: flex;
       align-items: center;
       justify-content: flex-start;
       margin: 0.5rem 0;
     }
+
     sl-progress-bar {
       margin-bottom: 1rem;
+      --sl-progress-bar-color: var(--sl-color-primary-500);
+      --sl-progress-bar-background-color: var(--sl-color-primary-200);
     }
+
     .checkbox-container {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       margin-left: 1rem;
     }
+
     .button-container {
       display: flex;
       justify-content: space-between;
+      margin-top: 1rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .container {
+        height: 85vh; /* Slight adjustment for smaller screens */
+      }
+
+      sl-button {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2 id="step-title">Which languages do you prefer for reading?</h2>
-    <sl-progress-bar id="progress-bar" value="0"></sl-progress-bar>
+    <div>
+      <h2 id="step-title">Which languages do you prefer for reading?</h2>
+      <sl-progress-bar id="progress-bar" value="0"></sl-progress-bar>
+    </div>
 
     <!-- Step 1: Select Language -->
     <div class="step active" id="step-1">
       <div class="checkbox-container">
-        <sl-checkbox id="lang-english" value="english">English</sl-checkbox>
-        <sl-checkbox id="lang-spanish" value="spanish">Spanish</sl-checkbox>
-        <sl-checkbox id="lang-french" value="french">French</sl-checkbox>
-        <sl-checkbox id="lang-german" value="german">German</sl-checkbox>
+        <sl-checkbox id="lang-english" value="English">English</sl-checkbox>
+        <sl-checkbox id="lang-spanish" value="Spanish">Spanish</sl-checkbox>
+        <sl-checkbox id="lang-french" value="French">French</sl-checkbox>
+        <sl-checkbox id="lang-german" value="German">German</sl-checkbox>
       </div>
-      <br>
       <div class="button-container">
         <span></span>
         <sl-button variant="primary" id="to-step-2">Next</sl-button>
@@ -79,13 +146,12 @@
     <!-- Step 2: Select Genre -->
     <div class="step" id="step-2">
       <div class="checkbox-container">
-        <sl-checkbox id="genre-fantasy" value="fantasy">Fantasy</sl-checkbox>
-        <sl-checkbox id="genre-mystery" value="mystery">Mystery</sl-checkbox>
-        <sl-checkbox id="genre-sci-fi" value="sci-fi">Science Fiction</sl-checkbox>
-        <sl-checkbox id="genre-romance" value="romance">Romance</sl-checkbox>
-        <sl-checkbox id="genre-nonfiction" value="non-fiction">Non-Fiction</sl-checkbox>
+        <sl-checkbox id="genre-fantasy" value="Fantasy">Fantasy</sl-checkbox>
+        <sl-checkbox id="genre-mystery" value="Mystery">Mystery</sl-checkbox>
+        <sl-checkbox id="genre-sci-fi" value="Science Fiction">Science Fiction</sl-checkbox>
+        <sl-checkbox id="genre-romance" value="Romance">Romance</sl-checkbox>
+        <sl-checkbox id="genre-nonfiction" value="Non-Fiction">Non-Fiction</sl-checkbox>
       </div>
-      <br>
       <div class="button-container">
         <sl-button variant="neutral" id="back-to-step-1">Back</sl-button>
         <sl-button variant="primary" id="to-step-3">Next</sl-button>
@@ -104,6 +170,7 @@
   </div>
 
   <script>
+    // Selectors
     const steps = document.querySelectorAll('.step');
     const progressBar = document.getElementById('progress-bar');
     const stepTitle = document.getElementById('step-title');
@@ -118,6 +185,7 @@
     const selectedLanguages = document.getElementById('selected-languages');
     const selectedGenres = document.getElementById('selected-genres');
 
+    // Function to Show Specific Step
     function showStep(stepNumber) {
       steps.forEach((step, index) => {
         step.classList.toggle('active', index === stepNumber - 1);
@@ -128,6 +196,7 @@
       if (stepNumber === 3) stepTitle.textContent = "All Done!";
     }
 
+    // Event Listeners for Navigation Buttons
     toStep2Btn.addEventListener('click', () => {
       const selected = Array.from(languageCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
       if (selected.length > 0) {
@@ -155,6 +224,20 @@
 
     confirmBtn.addEventListener('click', () => {
       window.location.href = 'recommendation.html';
+    });
+
+    // Optional: Prevent Container from Exceeding Viewport Height
+    window.addEventListener('resize', () => {
+      const container = document.querySelector('.container');
+      const viewportHeight = window.innerHeight;
+      container.style.maxHeight = (viewportHeight * 0.9) + 'px';
+    });
+
+    // Initial Adjustment on Page Load
+    window.addEventListener('DOMContentLoaded', () => {
+      const container = document.querySelector('.container');
+      const viewportHeight = window.innerHeight;
+      container.style.maxHeight = (viewportHeight * 0.9) + 'px';
     });
   </script>
 </body>
