@@ -1,2 +1,100 @@
-<h1>Community</h1>
-<p>I AM STILL DOING THIS SECTION</p>
+<main id="content-container">
+  <!-- Community Section -->
+  <div id="community-section" style="margin-top: -4rem;">
+    <h1 style="text-align: center; margin-bottom: 1rem; font-size: 1.8rem;">Community</h1>
+    <p style="text-align: center; color: #555; margin-bottom: 2rem;">
+      Explore the latest book reviews and opinions from the ECHO community.
+    </p>
+
+    <!-- Book Review Entries -->
+    <div class="community-reviews" style="display: flex; flex-direction: column; gap: 1.5rem; padding: 0 1rem;">
+
+      <!-- Review 1 - Bhimakshi -->
+      <div class="review-card" style="display: flex; gap: 1rem; align-items: center; background: white; box-shadow: var(--sl-shadow-medium); padding: 1rem; border-radius: var(--sl-border-radius-medium);">
+        <div class="profile-picture">
+          <img src="assets/img/a.webp" alt="Bhimakshi">
+        </div>
+        <div class="review-content">
+          <h3 style="margin: 0 0 0.5rem; font-size: 1.2rem; color: #333;">Bhimakshi</h3>
+          <p style="margin: 0 0 0.5rem; color: #666; font-size: 0.9rem;">
+            "The Hobbit was an incredible journey! Tolkien's world-building is unmatched. A must-read for all fantasy lovers!"
+          </p>
+          <sl-rating value="5" readonly></sl-rating>
+        </div>
+      </div>
+
+      <!-- Review 2 - Katya -->
+      <div class="review-card" style="display: flex; gap: 1rem; align-items: center; background: white; box-shadow: var(--sl-shadow-medium); padding: 1rem; border-radius: var(--sl-border-radius-medium);">
+        <div class="profile-picture">
+          <img src="assets/img/b.webp" alt="Katya">
+        </div>
+        <div class="review-content">
+          <h3 style="margin: 0 0 0.5rem; font-size: 1.2rem; color: #333;">Katya</h3>
+          <p style="margin: 0 0 0.5rem; color: #666; font-size: 0.9rem;">
+            "1984 is a timeless masterpiece. Orwell's vision of a dystopian future is hauntingly relevant even today."
+          </p>
+          <sl-rating value="4.5" readonly></sl-rating>
+        </div>
+      </div>
+
+      <!-- Review 3 - Myat -->
+      <div class="review-card" style="display: flex; gap: 1rem; align-items: center; background: white; box-shadow: var(--sl-shadow-medium); padding: 1rem; border-radius: var(--sl-border-radius-medium);">
+        <div class="profile-picture">
+          <img src="assets/img/c.webp" alt="Myat">
+        </div>
+        <div class="review-content">
+          <h3 style="margin: 0 0 0.5rem; font-size: 1.2rem; color: #333;">Myat</h3>
+          <p style="margin: 0 0 0.5rem; color: #666; font-size: 0.9rem;">
+            "Harry Potter and the Goblet of Fire truly shines! The Triwizard Tournament was thrilling, and the character development was top-notch."
+          </p>
+          <sl-rating value="5" readonly></sl-rating>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Write Your Own Review Button -->
+    <div style="text-align: center; margin-top: 2rem;">
+      <sl-button size="medium" variant="primary" onclick="openReviewDialog()">
+        Write Your Own Review
+      </sl-button>
+    </div>
+  </div>
+</main>
+
+<style>
+  /* Profile Picture Styling for Circular Avatars */
+  .profile-picture img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover; /* Ensures the image fills the circle */
+    border-radius: 50%; /* Circular shape */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+</style>
+
+<script>
+  const reviewDialog = document.querySelector('#review-dialog');
+
+  function openReviewDialog() {
+    reviewDialog.show();
+  }
+
+  function closeReviewDialog() {
+    reviewDialog.hide();
+  }
+
+  function submitReview() {
+    const name = document.getElementById('reviewer-name').value;
+    const content = document.getElementById('review-content').value;
+    const rating = document.getElementById('review-rating').value;
+
+    if (!name || !content || !rating) {
+      alert('Please fill in all fields and provide a rating.');
+      return;
+    }
+
+    alert(`Thank you, ${name}! Your review has been submitted.`);
+    reviewDialog.hide();
+  }
+</script>
